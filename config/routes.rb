@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   # get '/posts/:id' => 'posts#show', as: :post
 
   resources :posts, shallow: true do
-  resources:comments, only:[:create, :destroy]
-  resources:categories, only:[:create, :destroy]
-end
+    resources:comments, only:[:create, :destroy]
+    resources:categories, only:[:create, :destroy]
+  end
+  
 end

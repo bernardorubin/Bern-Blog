@@ -1,0 +1,2 @@
+var commentsView = ("<%= j render('comments/post_comments_view', post: @post, new_comment: Comment.new) %>")
+$("#posts_container").html(commentsView)

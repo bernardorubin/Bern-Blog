@@ -12,6 +12,9 @@
 
   <body>
     <%= render 'layouts/navbar' %>
+    <div style="text-align:center">
+        <%= notice || alert %>
+        </div>
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>
