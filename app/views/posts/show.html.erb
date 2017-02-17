@@ -8,9 +8,9 @@
 
   <div class="container">
   <hr>
-  <% 3.times do %>
+  <%# 3.times do %>
   <p> <%= @post.body %></p>
-  <% end %>
+  <%# end %>
   <span class="row">
   <p class="pull-right">
     <%= Faker::Date.backward(14) %>
@@ -55,7 +55,80 @@
 </div>
 </div>
 
-<%= render 'comments/post_comments_view', post: @post, new_comment: @comment %>
+<%# for use with ajax  %>
+<%# render 'comments/post_comments_view', post: @post, new_comment: @comment %>
+
+<div id="posts_container" class="container">
+  <div class="col-lg-8 col-lg-offset-2">
+    <div class="row">
+      <%= @comment.errors.full_messages.join(',') %>
+      <h1>Leave a comment</h1>
+
+
+      <%= form_for [@post, @comment] do |f| %>
+        <div class="form-group">
+          <%= f.label :body %>
+          <%= f.text_area :body, class: 'form-control' %>
+        </div>
+
+        <div class="container col-xs-12">
+          <%= f.submit "Submit", class: 'btn btn-default btn-primary pull-right' %>
+        </div>
+      <% end %>
+
+    <%# <form action="submit">
+        <div class="form-group">
+        <!-- <label for="exampleTextarea">Example textarea</label> -->
+        <textarea class="form-control" id="exampleTextarea" rows="3" name="comment" placeholder="Comment Here"></textarea>
+      </div>
+      <div class="form-group row">
+      <label for="example-text-input" class="col-xs-2 col-form-label">Character</label>
+      <div class="col-xs-10">
+        <input class="form-control" type="text" placeholder="Comment Author Name" id="example-text-input">
+      </div>
+      <hr>
+    </div>
+    </form> %>
+    </div>
+</div>
+
+<hr>
+
+<% @post.comments.last_first.each do |comment| %>
+
+<div class="col-lg-8 col-lg-offset-2">
+  <div class="row">
+    <ul class="media-list">
+      <li class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="http://unsplash.it/100" alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h2 class="media-heading"><%= Faker::Zelda.character %></h2>
+          <p> <%= comment.body %>
+          <%= link_to 'delete', comment_path(comment), method: :delete, data:{ confirm: 'Are You Sure?'}  %></p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="row">
+
+      <span class="pull-left">
+        <h3>
+      <%= Faker::Zelda.character %>
+        </h3>
+      </span>
+      <span class="pull-right">
+      <h4> <%= comment.updated_at.to_date %></h4>
+      </span>
+
+  </div>
+</div>
+<% end  %>
+</div>
 
 <div class="col-xs-12 more">
   <h1>More Comments</h1>
