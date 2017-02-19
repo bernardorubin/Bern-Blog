@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+
+5.times do
+  Category.create(name: Faker::Pokemon.name)
+end
+
+
+10.times do
+  Post.create(title: Faker::Pokemon.name, body: Faker::Hipster.paragraph(4))
+end
