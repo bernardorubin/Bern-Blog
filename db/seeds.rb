@@ -9,7 +9,7 @@
 
 
 5.times do
-  Category.create(name: Faker::Pokemon.name)
+  Category.create(name: Faker::Pokemon.name, post_id: 9)
 end
 
 

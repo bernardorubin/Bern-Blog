@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   def show
     @comment = Comment.new
-
+    @category = Category.new
     respond_to do |format|
       format.html
       format.json {render json: @post.to_json}
