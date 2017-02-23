@@ -1,0 +1,101 @@
+              /////////////////////////
+                Authentication Notes
+              /////////////////////////
+
+uncomment bcrypt gem
+
+rails g model user first_name last_name email password_digest
+change Migration
+
+       add_index :users, :email   in the migration
+
+
+rails g controller sessions
+
+
+edit routes
+        resources :users, only:[:new, :create]
+        resources :sessions, only:[:new, :create] do
+          delete :destroy, on: :collection
+        end
+
+edit controller
+
+
+edit User model add
+          -> has_secure_password
+
+//////////////////////////////////////////////////////////////////
+
+
+User must be signed in to create a question
+
+add fk
+
+rails g migration add_user_references_to_posts user:references
+
+add in migration
+        , index: true
+add to user.rb
+          has_many :posts, dependent: :nullify
+add to post.rb
+          belongs_to :user
+
+add to application controller
+      def authenticate_user!
+        redirect_to new_session_path, alert: 'please sign in' unless user_signed_in?
+      end
+
+      def user_signed_in?
+      session[:user_id].present?
+      end
+
+      helper_method :user_signed_in?
+
+      def current_user
+        User.find session[:user_id] if user_signed_in?
+      end
+      # make this method accessible in any view file
+      helper_method :current_user
+
+
+add to posts controller
+        before_action :authenticate_user!, except: [:show, :index]
+
+
+add to create method in posts controller
+          @post.user = current_user
+
+
+rails db:migrate
+
+Check if password works in terminal
+          u = User.new
+          u.password = "new password"
+
+Check if relationship works
+associate user to post
+                p = Post.new
+                p.user = User.first
+                p -> shows a user id
+
+
+add sessions view new.html.erb
+
+create users controller and views
+
+add links in navbar to views
+
+added as: :root to a route
+
+added to user model->
+      def full_name
+        "#{first_name} #{last_name}".strip.titleize
+      end
+
+
+              /////////////////////////
+                Authorization Notes
+              /////////////////////////
+              
+add cancancan to gemfile
