@@ -96,6 +96,77 @@ added to user model->
 
               /////////////////////////
                 Authorization Notes
+      https://github.com/CanCanCommunity/cancancan
               /////////////////////////
-              
+
 add cancancan to gemfile
+bundle
+rails g cancan:ability
+
+edit ability.rb in models
+        user ||= User.new
+
+        if user.is_admin?
+          can :manage, :all
+        end
+
+        can :manage, Post do |q|
+          q.user == user
+        end
+
+
+rails g migration add_is_admin_to_users is_admin:boolean
+
+added ", default: false to migration"
+
+
+make admin in console
+        u = User.last
+        u.is_admin = true
+        u.save
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////
+
+rails g controller admin/dashboard
+added dashboard routes
+
+
+edited admin controller
+created base controller manually
+
+app/views/admin/dashboard/index.html.erb
+
+
+create base controller
+
+layout admin in base controller
+create layout
+
+
+
+hits public, then goes to routes
+hash -> same input, same output
+
+
+Asset Pipeline-->
+
+to minimize requests - > combine all files into one
+
+rails assets:precompile -> not needed but joins files
+
+
+
+Deploy to heroku ->
+      a little more expensive
+      git commit am
+      heroku create awesome-answers-bernardo
+      git push heroku master
+      heroku run rails db:migrate
+      heroku logs --tail
+      heroku pg:reset DATABASE
