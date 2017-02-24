@@ -38,7 +38,7 @@
         </form>
         <% if user_signed_in?  %>
           <li> <%# session[:user_id] %></li>
-          <li><a href=""><%= current_user.full_name %> Signed In</a></li>
+          <li><%= link_to current_user.full_name,"/update" %></li>
             <li>
             <%= link_to 'Sign Out', sessions_path, method: :delete %></li>
         <% else %>

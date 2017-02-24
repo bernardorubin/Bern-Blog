@@ -1,16 +1,4 @@
 <div style="text-align:center">
 
 <h1>New Post</h1>
-<p><%= @post.errors.full_messages.join(', ') %></p>
-<%= form_for @post do |f| %>
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control'%>
-  </div>
-  <div>
-    <%= f.label :body %>
-    <%= f.text_area :body, class: 'form-control' %>
-  </div>
-  <%= f.submit %>
-<% end %>
-</div>
+<%= render 'form' %>

@@ -10,7 +10,15 @@ Rails.application.routes.draw do
   end
 
 
-  resources :users, only:[:new, :create]
+  resources :users, only:[:new,
+                          :create,
+                          :update]
+
+
+  get 'update' => 'users#edit'
+  patch 'update' => 'users#update'
+
+
   resources :sessions, only:[:new, :create] do
             # what is this ?   👇
     delete :destroy, on: :collection

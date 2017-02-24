@@ -1,27 +1,2 @@
 <h1 style="text-align:center"> Signup </h1>
-<%= @user.errors.full_messages.join(', ') %>
-<div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
-<%= form_for @user do |f| %>
-  <div class="form-group">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, class: "form-control" %>
-  </div>
-    <%= f.submit 'Sign Up' %>
-<% end  %>
-</div>
+<%= render 'form' %>
