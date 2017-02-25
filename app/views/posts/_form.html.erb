@@ -1,13 +1,19 @@
 <p><%= @post.errors.full_messages.join(', ') %></p>
-<%= form_for @post do |f| %>
-  <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control'%>
+<div class="container-fluid">
+  <div class="col-xs-8 col-xs-offset-2">
+    <%= form_for @post do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control'%>
+      </div>
+      <div>
+        <%= f.label :body %>
+        <%= f.text_area :body, class: 'form-control' %>
+      </div>
+      <br>
+      <%= f.submit "Submit", class: 'btn btn-default btn-secondary' %>
+    </div>
+    <% end %>
+    </div>
   </div>
-  <div>
-    <%= f.label :body %>
-    <%= f.text_area :body, class: 'form-control' %>
-  </div>
-  <%= f.submit %>
-<% end %>
 </div>

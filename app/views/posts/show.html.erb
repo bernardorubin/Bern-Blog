@@ -12,10 +12,10 @@
     <p> <%= @post.body %></p>
 
     <% if can?(:manage, @post) %>
-  <%= link_to 'Edit', edit_post_path(@post) %>
-  <%= link_to 'Delete', post_path(@post), method: :delete,
+      <%= link_to 'Edit', edit_post_path(@post) %>
+      <%= link_to 'Delete', post_path(@post), method: :delete,
   data: { confirm: 'Are you sure?' } %>
-<% end  %>
+    <% end  %>
 
     <%# end %>
     <hr class="hidden-md hidden-lg">
@@ -132,10 +132,10 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h2 class="media-heading"><%= Faker::Zelda.character %></h2>
-                        <p>
-                            <%= comment.body %>
-                            <%= link_to 'delete', comment_path(comment), method: :delete, data:{ confirm: 'Are You Sure?'}  %></p>
+                        <p> <%= comment.body %> </p>
+                            <% if can?(:manage, comment) %>
+                            <%= link_to 'delete', comment_path(comment), method: :delete, data:{ confirm: 'Are You Sure?'}  %>
+                            <% end %>
                     </div>
                 </li>
             </ul>
@@ -145,7 +145,8 @@
 
             <span class="pull-left">
                 <h3>
-                    <%= Faker::Zelda.character %>
+                  <% @username = User.find comment.user_id %>
+                    <%= @username.first_name %>
                 </h3>
             </span>
             <span class="pull-right">

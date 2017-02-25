@@ -16,14 +16,20 @@
       <div class="col-xs-12">
       </div>
 
-      <h2><%= Faker::StarWars.planet %></h2>
-      <p><%= Faker::Hipster.paragraph %></p>
-      <h5><%= Faker::Name.name %></h5>
+      <h2><%= link_to Post.last.title, post_path(Post.last) %></h2>
+      <p><%= Post.last.body %></p>
+      <h5><% @user = User.find Post.last.user_id %><%= @user.first_name  %></h5>
       <h5><%= Faker::Date.between(2.days.ago, Date.today) %></h5>
       </div>
       <div class="col-md-4 most-liked hidden-sm hidden-xs">
         <h1>Most Liked</h1>
-        <p><%= Faker::Hipster.paragraph %></p>
+        <ul class="list-group">
+          <% 7.times do %>
+          <li class="list-group-item">
+            <%= Faker::Hipster.word %>
+          </li>
+          <% end %>
+        </ul>
       </div>
   </div>
 </div>
@@ -32,13 +38,12 @@
 <div class="container posts">
         <% count = 0  %>
         <% count2 = 1  %>
-
           <% @posts.each do |p| %>
             <% if count == 0 %>
               <div class="row">
             <% end %>
                 <div class="container col-md-4">
-                  <img class="img-responsive" src="http://unsplash.it/1200/600" alt="">
+                  <img class="img-responsive" src="http://unsplash.it/1200/600/?random" alt="">
                   <span class="pull-left">
                     <h3> <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
                         <%= Faker::Number.number(3) %>
@@ -53,16 +58,21 @@
 
                   <h2><%= link_to p.title, post_path(p) %></h2>
                   <p style="word-wrap:break-word"><%= p.body %></p>
-                  <h5><%= p.user_id %></h5>
+                  <h5><% @username = User.find p.user_id %><%= @username.first_name %></h5>
                   <h5><%= p.updated_at.to_date %> <%= count %></h5>
                 </div>
               <% if count == 2 %>
-                </div>
+              </div>
               <% end %>
-              <% if count2 == @posts.length %>
-                </div>
+<%#####################################################  %>
+              <% if @posts.length % 3 != 0%>
+                <% if count2 == @posts.length %>
+              </div>
+                <% end %>
               <% end %>
-            <% count = (count + 1) % 3%>
+<%#####################################################  %>
+
+            <% count = (count + 1) % 3 %>
             <% count2 = (count2 + 1) %>
           <% end %>
 </div>

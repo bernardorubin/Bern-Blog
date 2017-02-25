@@ -162,6 +162,7 @@ rails assets:precompile -> not needed but joins files
 
 
 
+
 Deploy to heroku ->
       a little more expensive
       git commit am
@@ -170,3 +171,7 @@ Deploy to heroku ->
       heroku run rails db:migrate
       heroku logs --tail
       heroku pg:reset DATABASE
+
+
+
+rails g migration add_user_references_to_comments user:references

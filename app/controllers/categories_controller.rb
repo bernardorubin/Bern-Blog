@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     category_params    = params.require(:category).permit(:name)
@@ -13,12 +14,11 @@ class CategoriesController < ApplicationController
       render 'posts/show'
     end
   end
-
+  # this isn't being used
   def destroy
     category = Category.find params[:id]
     category.destroy
     redirect_to post_path(category.question_id), notice: 'Category deleted!'
   end
-
-
+  # ////////////////////////////
 end

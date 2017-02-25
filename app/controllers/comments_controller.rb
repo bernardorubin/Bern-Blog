@@ -5,7 +5,7 @@ def create
   @comment          = Comment.new comment_params
   @post = Post.find params[:post_id]
   @comment.post = @post
-
+  @comment.user = current_user
   if @comment.save
     redirect_to post_path(params[:post_id]), notice: 'comment created!'
   else
@@ -33,9 +33,9 @@ end
 # end
 
 def destroy
-  comment = Comment.find params[:id]
-  comment.destroy
-  redirect_to post_path(comment.question_id), notice: 'Comment deleted!'
+  @comment = Comment.find params[:id]
+  @comment.destroy
+  redirect_to post_path(@comment.post_id), notice: 'Comment deleted!'
 end
 
 
