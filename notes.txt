@@ -1,5 +1,5 @@
               /////////////////////////
-                Authentication Notes
+                Authentication Notes Blog
               /////////////////////////
 
 uncomment bcrypt gem

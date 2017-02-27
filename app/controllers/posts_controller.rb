@@ -31,6 +31,7 @@ class PostsController < ApplicationController
 
   def index
   if params[:category]
+    # ERROR 👇
     @products = Post.order(created_at: :desc)#.where("category = '#{params[:category]}'")
    else
     @posts = Post.order(created_at: :desc)

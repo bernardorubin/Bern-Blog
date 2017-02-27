@@ -81,7 +81,8 @@
                     </div>
 
                     <div class="media-body">
-                        <h2 class="media-heading">Author Name</h2>
+                        <h2 class="media-heading"><% @username = User.find @post.user_id %>
+                    <%= @username.first_name %></h2>
                         <p>
                             <%= Faker::Lorem.paragraph(5) %></p>
                     </div>
