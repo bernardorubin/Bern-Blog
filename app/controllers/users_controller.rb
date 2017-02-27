@@ -23,15 +23,27 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.update(user_params)
-    redirect_to root_path
+    if user_params[:current_password]
+      if current_user.authenticate(user_params[:current_password])
+        current_user.update(user_params.except(:current_password))
+        redirect_to root_path
+      else
+        redirect_to updatepass_path, notice: 'Password is incorrect bro'
+      end
+    else
+      current_user.update(user_params.except(:current_password))
+      redirect_to root_path, notice: 'Password Updated successfully!'
+    end
+  end
+#
+  def editpass
+    @user = current_user
   end
 
   private
+
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
   end
-
-
 
 end

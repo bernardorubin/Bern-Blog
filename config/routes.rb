@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  get '/' => 'home#index', as: :root
+  # get '/' => 'home#index', as: :root
+  get '/' => 'posts#index', as: :root
+
+
   # get '/posts/:id' => 'posts#show', as: :post
 
   resources :posts, shallow: true do
@@ -15,8 +18,12 @@ Rails.application.routes.draw do
                           :update]
 
 
+  get 'updatepass' => 'users#editpass'
+
   get 'update' => 'users#edit'
   patch 'update' => 'users#update'
+
+
 
 
   resources :sessions, only:[:new, :create] do
