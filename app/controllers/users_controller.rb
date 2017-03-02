@@ -35,7 +35,7 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: 'Password Updated successfully!'
     end
   end
-#
+
   def editpass
     @user = current_user
   end
