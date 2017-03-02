@@ -7,15 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-
-5.times do
-  Category.create(name: Faker::Pokemon.name, post_id: 9)
-end
-
 2.times do
   User.create(first_name: Faker::Pokemon.name, last_name: Faker::Pokemon.name, email: Faker::Internet.email, password: 'chichi', password_confirmation: 'chichi' )
 end
 
 10.times do
   Post.create(title: Faker::Pokemon.name, body: Faker::Hipster.paragraph(4), user_id: 1)
+end
+5.times do
+  Category.create(name: Faker::Pokemon.name, post_id: 9)
 end
