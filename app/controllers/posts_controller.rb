@@ -39,13 +39,22 @@ class PostsController < ApplicationController
   end
 
   def edit
+    if can? :manage, @post
+        redirect_to edit_post_path(@post), notice: 'You\'re authorized'
+    else
+      redirect_to post_path(@post), notice: '🙅🏿‍♂️ Don\'t be sneaky 👀'
+    end
   end
 
   def update
-    if @post.update post_params
-      redirect_to post_path(@post), notice: 'Post updated!'
+    if can? :manage, @post
+      if @post.update post_params
+        redirect_to post_path(@post), notice: 'Post updated!'
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to post_path(@post), notice: 'Don\'t be sneaky'
     end
   end
 
