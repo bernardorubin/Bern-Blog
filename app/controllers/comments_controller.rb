@@ -1,18 +1,18 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-def create
-  comment_params    = params.require(:comment).permit(:body)
-  @comment          = Comment.new comment_params
-  @post = Post.find params[:post_id]
-  @comment.post = @post
-  @comment.user = current_user
-  if @comment.save
-    redirect_to post_path(params[:post_id]), notice: 'comment created!'
-  else
-    flash[:alert] = 'please fix errors'
-    render 'posts/show'
+  def create
+    comment_params    = params.require(:comment).permit(:body)
+    @comment          = Comment.new comment_params
+    @post = Post.find params[:post_id]
+    @comment.post = @post
+    @comment.user = current_user
+    if @comment.save
+      redirect_to post_path(params[:post_id]), notice: 'comment created!'
+    else
+      flash[:alert] = 'please fix errors'
+      render 'posts/show'
+    end
   end
-end
 
 # ajax version
 # def create
@@ -32,11 +32,11 @@ end
 #   end
 # end
 
-def destroy
-  @comment = Comment.find params[:id]
-  @comment.destroy
-  redirect_to post_path(@comment.post_id), notice: 'Comment deleted!'
-end
+  def destroy
+    @comment = Comment.find params[:id]
+    @comment.destroy
+    redirect_to post_path(@comment.post_id), notice: 'Comment deleted!'
+  end
 
 
 end
