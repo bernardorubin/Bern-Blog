@@ -23,9 +23,6 @@ Rails.application.routes.draw do
   get 'update' => 'users#edit'
   patch 'update' => 'users#update'
 
-
-
-
   resources :sessions, only:[:new, :create] do
             # what is this ?   👇
     delete :destroy, on: :collection

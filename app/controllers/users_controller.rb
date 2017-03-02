@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def update
     if user_params[:current_password]
-      if current_user.authenticate(user_params[:current_password])
+      if current_user.authenticate(user_params[:current_password]) && user_params[:current_password] != user_params[:password]
         current_user.update(user_params.except(:current_password))
         redirect_to root_path
       else
