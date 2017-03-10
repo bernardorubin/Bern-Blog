@@ -1,0 +1,11 @@
+<div class="container">
+  <h1> Posts liked by <%= @user&.full_name %></h1>
+
+  <ul>
+    <% @posts.each do |p| %>
+      <%# link_to p.title, post_path(q) %>
+      <!-- 👇 this sugar syntax for 👆 -->
+      <li><%= link_to p.title, p %></li>
+    <% end %>
+  </ul>
+</div>

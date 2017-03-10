@@ -18,6 +18,16 @@ class Ability
       c.user == user
     end
 
+    cannot :like, Post do |p|
+      p.user == user
+    end
+
+    can :like, Post do |p|
+      p.user != user
+    end
+
+    
+
     #   if user.admin?
     #     can :manage, :all
     #   else

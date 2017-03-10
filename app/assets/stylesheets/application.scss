@@ -31,7 +31,9 @@ body {
   margin-bottom: 60px;
   font-family: 'Arimo', sans-serif;
 }
-
+a:hover {
+  text-decoration: none;
+}
 .most-liked h1{
   margin-top:0px;
 }

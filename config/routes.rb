@@ -8,14 +8,15 @@ Rails.application.routes.draw do
   # get '/posts/:id' => 'posts#show', as: :post
 
   resources :posts, shallow: true do
-    resources:comments, only:[:create, :destroy]
-    resources:categories, only:[:create, :destroy]
+    resources :comments, only:[:create, :destroy]
+    resources :categories, only:[:create, :destroy]
+    resources :likes, only: [:create, :destroy]
   end
 
 
-  resources :users, only:[:new,
-                          :create,
-                          :update]
+  resources :users, only:[:new, :create, :update] do
+    resources :likes, only: [:index]
+  end
 
 
   get 'updatepass' => 'users#editpass'
