@@ -6,14 +6,14 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+
+gem 'sinatra', '2.0.0.beta2'
+gem "delayed_job_web"
+gem 'delayed_job_active_record'
 gem 'cancancan'
-
-
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "font-awesome-rails"
-
 gem 'faker', '~> 1.6', '>= 1.6.3'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   # get '/' => 'home#index', as: :root
   get '/' => 'posts#index', as: :root
 
-
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+  
   # get '/posts/:id' => 'posts#show', as: :post
 
   resources :posts, shallow: true do
