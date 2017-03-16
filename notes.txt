@@ -28,7 +28,7 @@ edit User model add
 //////////////////////////////////////////////////////////////////
 
 
-User must be signed in to create a question
+User must be signed in to create a post
 
 add fk
 
@@ -166,7 +166,7 @@ rails assets:precompile -> not needed but joins files
 Deploy to heroku ->
       a little more expensive
       git commit am
-      heroku create awesome-answers-bernardo
+      heroku create bern-blog-bernardo
       git push heroku master
       heroku run rails db:migrate
       heroku logs --tail
@@ -243,3 +243,142 @@ VIEW USER LIKES
   created views to index likes
   created links to views
   added secure access for likes of each user
+
+
+
+
+  //////////////////////////////////////////////////////////////////
+              ███████╗███╗   ███╗ █████╗ ██╗██╗
+              ██╔════╝████╗ ████║██╔══██╗██║██║
+              █████╗  ██╔████╔██║███████║██║██║
+              ██╔══╝  ██║╚██╔╝██║██╔══██║██║██║
+              ███████╗██║ ╚═╝ ██║██║  ██║██║███████╗
+              ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚══════╝
+  //////////////////////////////////////////////////////////////////
+
+  ➕ create file config/initializers/setup_mail.rb
+      📝 executed once, if changed you have to restart server
+  	ActionMailer::Base.smtp_settings = {
+    	address:              "smtp.gmail.com",
+    	port:                 "587",
+    	enable_starttls_auto: true,
+    	authentication:       :plain,
+    	user_name:            ENV["EMAIL_USER_NAME"],
+    	password:             ENV["EMAIL_PASSWORD"]
+  	}
+  ➕ .gitignore
+      /config/initializers/app_keys.rb
+  ➕ create app_keys.rb file
+  	ENV["EMAIL_USER_NAME"] = 'answerawesome'
+  	ENV["EMAIL_PASSWORD"] = 'Sup3r$ecret$$'
+
+  💻 rails g mailer comments_mailer
+
+  ➕ create two views in comments_mailer and edit them
+
+  ➕ edit comments mailer
+    def notify_post_owner
+
+  🎮
+    | CommentsMailer.notify_post_owner.deliver_now! ->check for an exception with bang
+    | CommentsMailer.notify_post_owner.deliver_now
+
+  com = Comment.last
+  CommentsMailer.notify_post_owner(com).deliver_now!
+
+  ➕ config environments development.rb
+    config.action_mailer.default_url_options = { host: "localhost:3000" }
+
+
+  🎮 com.post.user
+  CommentsMailer.notify_post_owner(@answer).deliver_now
+
+  💻 to see console history in terminal
+    atom ~/.irbhistory
+
+  ➕ comments controller
+    CommentsMailer.notify_post_owner(@answer).deliver_now
+
+  🎮  check environment in console
+      Rails.env >> development
+  💎 gem letter opener
+      add to gemfile >>   gem 'letter_opener'
+  🔗 https://github.com/ryanb/letter_opener
+
+  ➕ config environments development.rb
+      config.action_mailer.delivery_method = :letter_opener
+
+      //STYLING EMAILS >>
+        inline styling recommended 👍 >> sometimes mails remove the head
+        tables for layouts are better
+        Use -> sendgrid or mandrill in production instead of gmail
+        🔗 https://sendgrid.com/ ✅
+        🔗 http://www.mandrill.com/
+
+  💎 premailer gem >> converts normal css styles to inline
+  🔗 https://github.com/premailer/premailer
+
+
+  ruby is blocking, it will wait for the email to send if we only have one server one thread
+  💎 delayed job
+  🔗 https://github.com/collectiveidea/delayed_job
+
+  to visualize delayed job
+  💎 delayed job web gem
+  🔗 https://github.com/ejschmitt/delayed_job_web
+
+  ➕add to gemfile
+    gem "delayed_job_web"
+    gem 'delayed_job_active_record'
+
+  💻 rails generate delayed_job:active_record
+    error!❌
+
+  💎 update sinatra
+    in gemfile >> gem 'sinatra', '2.0.0.beta2'
+
+  💻 bundle update sinatra
+
+  💻 rails generate delayed_job:active_record
+
+  📝 old rails migration->
+      self.up when your run rails db migrate
+      self.down when you rollback
+      now you just self.change
+
+  💻 rails db:migrate
+
+  ➕ comments controller change deliver_now to deliver_later
+      CommentsMailer.notify_post_owner(@answer).deliver_later
+
+  ➕ config/application.rb
+      config.active_job.queue_adapter = :delayed_job
+
+  How to check the queue
+    lets finish setup
+
+  ➕ add routes ->
+    match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+    📝 match -> get or post or patch
+
+  to see delayed jobs >>
+    ⏩ go to http://localhost:3000/delayed_job/
+
+  to run it open a new process (tab)
+  💻 rails jobs:work
+
+
+
+
+
+
+
+[Stretch] Build a mechanism to have daily emails about comments sent instead of getting an email for every comment
+
+
+STRETCH ->>> DAILY EMAILS
+https://github.com/amitree/delayed_job_recurring
+https://github.com/collectiveidea/delayed_job
+https://github.com/codez/delayed_cron_job
+THE BEST >>>>>
+https://github.com/resque/resque

@@ -31,11 +31,13 @@
         <li><a href="#">Contact</a></li>
         <li> <%= link_to 'Posts', posts_path %></li>
         <li> <%= link_to 'New Post', new_post_path %></li>
-        <li> <%= link_to 'My Likes', user_likes_path(current_user) %></li>
+        <% if user_signed_in?  %>
+        <li> <%= link_to 'Likes', user_likes_path(current_user) %></li>
+        <% end %>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <form class="navbar-form navbar-left hidden-xs">
+        <form class="navbar-form navbar-left hidden-xs hidden-sm">
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Search" style="max-width:120px;">
           </div>
